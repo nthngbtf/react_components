@@ -1,31 +1,13 @@
 import Table from "./Table";
-import { useState } from "react";
+import useSort from "../hooks/useSort";
 import { GoArrowSmallUp, GoArrowSmallDown } from "react-icons/go";
 
 function SortableTable(props) {
-  const [sortOrder, setSortOrder] = useState(null);
-  const [sortBy, setSortBy] = useState(null);
-
   const { config, value } = props;
-
-  const handleClick = (label) => {
-    if (sortBy && label !== sortBy) {
-      setSortOrder("asc");
-      setSortBy(label);
-      return;
-    }
-
-    if (sortOrder === null) {
-      setSortOrder("asc");
-      setSortBy(label);
-    } else if (sortOrder === "asc") {
-      setSortOrder("des");
-      setSortBy(label);
-    } else {
-      setSortOrder(null);
-      setSortBy(null);
-    }
-  };
+  const { sortBy, sortOrder, setSortColumn, sortedData } = useSort(
+    value,
+    config
+  );
 
   const updateConfig = config.map((column) => {
     if (!column.sortValue) {
@@ -36,7 +18,7 @@ function SortableTable(props) {
       header: () => (
         <th
           className="cursor-pointer hover:bg-gray-100"
-          onClick={() => handleClick(column.label)}
+          onClick={() => setSortColumn(column.label)}
         >
           <div className="flex items-center">
             {getIcons(column.label, sortBy, sortOrder)}
@@ -46,31 +28,6 @@ function SortableTable(props) {
       ),
     };
   });
-
-  //Only sort data is sort order && sort are not null
-  // make a copy of data props
-  //find the correct sortValue function and use it
-  let sortedData = value;
-  if (sortBy && sortOrder) {
-    const { sortValue } = config.find((config) => config.label === sortBy);
-
-    // console.log(sortValue);
-    // sortedData = [...value];
-    // console.log(sortedData);
-    sortedData = [...value].sort((a, b) => {
-      const valueA = sortValue(a);
-      const valueB = sortValue(b);
-      // console.log(a, "B", b);
-
-      const reverseOrder = sortOrder === "asc" ? 1 : -1;
-
-      if (typeof valueA === "string") {
-        return valueA.localeCompare(valueB) * reverseOrder;
-      } else {
-        return (valueA - valueB) * reverseOrder;
-      }
-    });
-  }
 
   return (
     <div>

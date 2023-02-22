@@ -1,4 +1,5 @@
 import Acoordion from "../components/Acoordion";
+import Panel from "../components/Panel";
 
 const AcoordionPage = () => {
   const items = [
@@ -21,7 +22,11 @@ const AcoordionPage = () => {
         " Javascript Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit... ",
     },
   ];
-  return <Acoordion items={items}></Acoordion>;
+  return (
+    <Panel>
+      <Acoordion items={items}></Acoordion>
+    </Panel>
+  );
 };
 
 export default AcoordionPage;

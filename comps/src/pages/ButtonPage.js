@@ -18,6 +18,10 @@ const ButtonPage = () => {
           <GoBell />
           Primary
         </Button>
+        <Button className="mb-5 text-blue-500" primaryoutline>
+          <GoBell />
+          Primary
+        </Button>
       </div>
       <div>
         <Button secondary>

@@ -7,7 +7,7 @@ const SET_VALUE_ADD = "setvaluetoadd";
 const DECREMENT_COUNT = "decrement";
 const ADDING_VALUE = "addingvalue";
 
-const reducerCounter = (state, action) => {
+const reducer = (state, action) => {
   switch (action.type) {
     case INCREMENT_COUNT:
       return {
@@ -62,7 +62,7 @@ function CounterPage({ initialCount }) {
   //   const [count, setCount] = useState(initialCount);
   //   const [valueToAdd, setValueToAdd] = useState(0);
 
-  const [state, dispath] = useReducer(reducerCounter, {
+  const [state, dispath] = useReducer(reducer, {
     count: initialCount,
     valueToAdd: 0,
   });
